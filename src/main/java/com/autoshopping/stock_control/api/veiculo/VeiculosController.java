@@ -168,9 +168,9 @@ public class VeiculosController {
     }
 
     /*Deletando um veículo*/
-    @DeleteMapping(path="{id}")
-    public ResponseEntity delete (@PathVariable("id") Integer id){
-        boolean ok=service.delete(id);
+    @DeleteMapping(path="{placa}")
+    public ResponseEntity delete (@PathVariable("placa")String placa){
+        boolean ok=service.delete(placa);
         return ok?
                 ResponseEntity.ok("Veiculo excluido com sucesso"):
                 ResponseEntity.notFound().build();
