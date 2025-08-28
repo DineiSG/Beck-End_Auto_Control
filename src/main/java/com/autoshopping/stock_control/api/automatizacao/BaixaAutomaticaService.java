@@ -10,6 +10,7 @@ import com.autoshopping.stock_control.api.veiculo.VeiculosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -26,7 +27,8 @@ public class BaixaAutomaticaService {
     @Autowired
     private VeiculosRepository veiculosRepository;
 
-    @Scheduled(cron = "00 17 16 * * *")
+    @Scheduled(cron = "00 55 13 * * *")
+    @Transactional
     public void processarBaixasAutomaticas(){
         System.out.println("Iniciando processo de baixas automáticas às " + LocalDateTime.now());
 
@@ -51,21 +53,20 @@ public class BaixaAutomaticaService {
                 baixa.setCor(veiculos.getCor());
                 baixa.setRenavan(veiculos.getRenavan());
                 baixa.setUnidade(veiculos.getUnidade());
-                baixa.setTag(veiculos.getTag());
                 baixa.setMotivo(liberacao.getMotivo());
-                baixa.setData_registro(liberacao.getDataRegistro());
+                baixa.setDataRegistro(liberacao.getDataRegistro());
+                baixa.setData_cadastro(liberacao.getData_cadastro());
                 baixa.setObservacoes("Baixa automatica");
                 baixasRepository.save(baixa);
 
-                veiculos.setUnidade(null);
-                veiculos.setIdUnidade(null);
-                veiculos.setTag(null);
-                veiculos.setObservacoes("Baixa realizada de forma automatica por motivo de venda, devolução ou transferencia.");
-                veiculosRepository.save(veiculos);
+                veiculosRepository.deleteByPlaca(veiculos.getPlaca());
 
                 System.out.println("Veículo baixado com sucesso: " + veiculos.getPlaca());
-            }catch(Exception e){
                 System.out.println("Processos de baixas automaticas finalizado.");
+            }catch(Exception e){
+                System.err.println("Erro inesperado durante o processo de baixa automatica: " +e.getMessage());
+                throw new RuntimeException("Falha na baixa automática para o veiculo de placa: "+ liberacao.getPlaca(), e);
+
             }
         }
     }

@@ -19,22 +19,17 @@ public class Veiculos extends RepresentationModel<Veiculos> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String placa;
-    @Column(name = "id_unidade")
-    private Integer idUnidade ;
-    private String ano;
-    private String cor;
-    private String modelo;
-    private String marca;
-    private String valor_meio_acesso;
-    private String veiculo_status;
-    private String unidade;
-    private String renavan;
-    private String observacoes;
     private Timestamp data_registro;
     private Timestamp data_alteracao;
+    private String marca;
+    private String modelo;
+    private String cor;
+    private String placa;
+    private String ano_fabricacao;
     private String ano_modelo;
-    private String tag;
+    private String renavan;
+    private String unidade;
+    private String observacao;
     private String fipe;
 
     public void save(Veiculos veiculo) {

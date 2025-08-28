@@ -3,6 +3,7 @@ package com.autoshopping.stock_control.api.veiculo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -168,7 +169,8 @@ public class VeiculosController {
     }
 
     /*Deletando um veículo*/
-    @DeleteMapping(path="{placa}")
+    @Transactional
+    @DeleteMapping(path="/placa/{placa}")
     public ResponseEntity delete (@PathVariable("placa")String placa){
         boolean ok=service.delete(placa);
         return ok?

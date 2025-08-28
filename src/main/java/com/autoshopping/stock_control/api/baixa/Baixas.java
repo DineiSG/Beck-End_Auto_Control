@@ -10,20 +10,24 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @Entity
-@Table(name = "baixas", schema = "vaga")
+@Table(name = "baixas")
 public class Baixas {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String placa;
+    @Column(name = "data_registro")
+    private Timestamp dataRegistro;
+    private String data_cadastro;
     private String marca;
     private String modelo;
     private String cor;
-    private String renavan;
+    private String placa;
     private String unidade;
+    private String solicitante ;
     private String motivo;
-    private Timestamp data_registro;
-    private String tag;
     private String observacoes;
+    private String renavan;
+    private String ano_fabricacao;
+    private String ano_modelo;
 }
