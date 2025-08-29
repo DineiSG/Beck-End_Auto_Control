@@ -27,7 +27,7 @@ public class BaixaAutomaticaService {
     @Autowired
     private VeiculosRepository veiculosRepository;
 
-    @Scheduled(cron = "00 55 13 * * *")
+    @Scheduled(cron = "00 15 19 * * *")
     @Transactional
     public void processarBaixasAutomaticas(){
         System.out.println("Iniciando processo de baixas automáticas às " + LocalDateTime.now());
