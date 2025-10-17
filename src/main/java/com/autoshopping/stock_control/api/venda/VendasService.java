@@ -1,5 +1,6 @@
 package com.autoshopping.stock_control.api.venda;
 
+import com.autoshopping.stock_control.api.veiculo.Veiculos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,18 @@ public class VendasService {
     private Optional<Object> getVendasById(Integer id) {return Optional.of(rep.findById(String.valueOf(id)));  }
 
     public Vendas insert(Vendas venda) {return rep.save(venda);}
+
+    /*Metodo para atualizar uma venda*/
+    public Vendas update(Vendas venda, String placa){
+        Optional<Vendas> optional = getVendasByPlaca(placa);
+        if (optional.isPresent()) {
+            Vendas vendas = optional.get();
+            rep.save(venda);
+            return venda;
+        } else {
+            throw new RuntimeException("Nao foi possivel atualizar o registro");
+        }
+    }
 
     public boolean delete(Integer id) {
         if(getVendasById(id).isPresent()){

@@ -1,5 +1,6 @@
 package com.autoshopping.stock_control.api.venda;
 
+import com.autoshopping.stock_control.api.veiculo.Veiculos;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -51,6 +54,18 @@ public class VendasController {
         logger.info("Foi realizada uma nova comunicação de venda: "+venda);
         return ResponseEntity.ok("Venda comunicada com sucesso.");
     }
+
+    @PutMapping(path="/placa/{placa}")
+    public ResponseEntity put(@PathVariable("placa") String placa, @RequestBody Vendas venda){
+        Vendas atualizarVenda=service.update(venda, placa);
+        Map<String, Object> response = new HashMap<>();
+        response.put("mensagem", "Veiculo atualizado com sucesso");
+        response.put("veiculo", atualizarVenda);
+        return ResponseEntity.ok(response);
+    }
+
+
+
     @DeleteMapping("{id}")
     public ResponseEntity delete (@PathVariable("id") Integer id){
         boolean ok=service.delete(id);
